@@ -557,11 +557,11 @@ export default function LearningPage() {
           const newCount = successCount + 1;
           setSuccessCount(newCount);
 
-          if (newCount >= 3) {
+          if (newCount >= 2) {
             setCompleted(true);
-            setFeedback("Mastered! You successfully signed this letter 3 times.");
+            setFeedback("Mastered! You successfully signed this letter 2 times.");
           } else {
-            setFeedback(`Good! (${newCount}/3). Click 'Do it again' to continue...`);
+            setFeedback(`Good! (${newCount}/2). Click 'Do it again' to continue...`);
           }
         } else {
           if (conf >= 0.55) bumpAttempt(false);
