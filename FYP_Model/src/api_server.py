@@ -99,12 +99,12 @@ def extract_landmarks(result: mp_vision.HandLandmarkerResult):
 
 @app.post("/api/predict", response_model=PredictResponse)
 async def predict(req: PredictRequest):
-    # 1. Decode incoming frame
+    # Decode incoming frame
     bgr = decode_image(req.image)
     if bgr is None:
         return PredictResponse(label=None, confidence=0.0, hand_detected=False)
 
-    # 2. Run MediaPipe hand detection (IMAGE mode — synchronous)
+    # Run MediaPipe hand detection (IMAGE mode — synchronous)
     rgb      = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
     result   = detector.detect(mp_image)
@@ -113,7 +113,7 @@ async def predict(req: PredictRequest):
     if vec is None:
         return PredictResponse(label=None, confidence=0.0, hand_detected=False)
 
-    # 3. CNN inference
+    #  CNN inference
     probs = cnn_model.predict(vec.reshape(1, 63), verbose=0)[0]
     idx   = int(np.argmax(probs))
     label = CLASSES[idx]
